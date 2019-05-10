@@ -1,0 +1,318 @@
+Enter password: **********
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 1
+Server version: 5.6.41-log MySQL Community Server (GPL)
+
+Copyright (c) 2000, 2018, Oracle and/or its affiliates. All rights reserved.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> create database Classwork;
+Query OK, 1 row affected (0.11 sec)
+
+mysql> create table Student;
+ERROR 1046 (3D000): No database selected
+mysql> use database Classwork;
+ERROR 1049 (42000): Unknown database 'database'
+mysql> use Classwork;
+Database changed
+mysql> create table Students;
+ERROR 1113 (42000): A table must have at least 1 column
+mysql> create table Students (roll_no int primary key, name varchar(40), address varchar(200), semester int);
+Query OK, 0 rows affected (1.63 sec)
+
+mysql> create table Academic_programmes (programme_name varchar(128) unique, duration int, programme_code int primary key);
+Query OK, 0 rows affected (0.49 sec)
+
+mysql> create table Departments (department_code int primary key, department_name int unique, hod varchar(128));
+Query OK, 0 rows affected (2.14 sec)
+
+mysql> alter Academic_programmes add course1 varchar(128);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'Academic_programmes add course1 varchar(128)' at line 1
+mysql> alter table Academic_programmes add course1 varchar(128);
+Query OK, 0 rows affected (4.39 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> alter table Academic_programmes add course2 varchar(128);
+Query OK, 0 rows affected (0.63 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> alter table Academic_programmes add course3 varchar(128);
+Query OK, 0 rows affected (1.25 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> create table Teacher (employee_code int primary key, name varchar(128), department varchar(128), designation varchar(128));
+Query OK, 0 rows affected (1.42 sec)
+
+mysql> insert into Students values (101,'Apurv','Roorkee',1),(102,'Ashish','Dehradun',1),(103,'Vibhor','Delhi',2),(104,'Aman','Agra',2);
+Query OK, 4 rows affected (1.83 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+mysql> insert into Students values (105,'Mohit','Kota',1),(106,'Jayansh','Aligarh',1),(107,'Shashwat','Ghaziabad',2),(108,'Dipesh','Jaipur',2);
+Query OK, 4 rows affected (1.05 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+mysql> insert into Students values(502,'Arun','Guwahati',2);
+Query OK, 1 row affected (0.06 sec)
+
+mysql> insert into Academic_programmes ('B.Tech',4,401),('M.Tech',2,201),('P.hd',1,301),('MBA',2,202);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ''B.Tech',4,401),('M.Tech',2,201),('P.hd',1,301),('MBA',2,202)' at line 1
+mysql> select * from Students;
++---------+----------+-----------+----------+
+| roll_no | name     | address   | semester |
++---------+----------+-----------+----------+
+|     101 | Apurv    | Roorkee   |        1 |
+|     102 | Ashish   | Dehradun  |        1 |
+|     103 | Vibhor   | Delhi     |        2 |
+|     104 | Aman     | Agra      |        2 |
+|     105 | Mohit    | Kota      |        1 |
+|     106 | Jayansh  | Aligarh   |        1 |
+|     107 | Shashwat | Ghaziabad |        2 |
+|     108 | Dipesh   | Jaipur    |        2 |
+|     502 | Arun     | Guwahati  |        2 |
++---------+----------+-----------+----------+
+9 rows in set (0.08 sec)
+
+mysql> select * from Students where address='Kota';
++---------+-------+---------+----------+
+| roll_no | name  | address | semester |
++---------+-------+---------+----------+
+|     105 | Mohit | Kota    |        1 |
++---------+-------+---------+----------+
+1 row in set (0.06 sec)
+
+mysql> select * from Students where address='Jaipur';
++---------+--------+---------+----------+
+| roll_no | name   | address | semester |
++---------+--------+---------+----------+
+|     108 | Dipesh | Jaipur  |        2 |
++---------+--------+---------+----------+
+1 row in set (0.00 sec)
+
+mysql> alter table Students add cgpa int;
+Query OK, 0 rows affected (0.50 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> select * from Students;
++---------+----------+-----------+----------+------+
+| roll_no | name     | address   | semester | cgpa |
++---------+----------+-----------+----------+------+
+|     101 | Apurv    | Roorkee   |        1 | NULL |
+|     102 | Ashish   | Dehradun  |        1 | NULL |
+|     103 | Vibhor   | Delhi     |        2 | NULL |
+|     104 | Aman     | Agra      |        2 | NULL |
+|     105 | Mohit    | Kota      |        1 | NULL |
+|     106 | Jayansh  | Aligarh   |        1 | NULL |
+|     107 | Shashwat | Ghaziabad |        2 | NULL |
+|     108 | Dipesh   | Jaipur    |        2 | NULL |
+|     502 | Arun     | Guwahati  |        2 | NULL |
++---------+----------+-----------+----------+------+
+9 rows in set (0.00 sec)
+
+mysql> update student set cgpa=9 where roll_no=101;
+ERROR 1146 (42S02): Table 'classwork.student' doesn't exist
+mysql> update Student set cgpa=9 where roll_no=101;
+ERROR 1146 (42S02): Table 'classwork.student' doesn't exist
+mysql> update Students set cgpa=9 where roll_no=101;
+Query OK, 1 row affected (2.64 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update Students set cgpa=9.6 where roll_no=102;
+Query OK, 1 row affected (0.20 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update Students set cgpa=9.0 where roll_no=103;
+Query OK, 1 row affected (0.06 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update Students set cgpa=7.9 where roll_no=104;
+Query OK, 1 row affected (0.04 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update Students set cgpa=8.5 where roll_no=105;
+Query OK, 1 row affected (0.06 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update Students set cgpa=8.8 where roll_no=106;
+Query OK, 1 row affected (0.03 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update Students set cgpa=9.2 where roll_no=107;
+Query OK, 1 row affected (1.34 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from Students;
++---------+----------+-----------+----------+------+
+| roll_no | name     | address   | semester | cgpa |
++---------+----------+-----------+----------+------+
+|     101 | Apurv    | Roorkee   |        1 |    9 |
+|     102 | Ashish   | Dehradun  |        1 |   10 |
+|     103 | Vibhor   | Delhi     |        2 |    9 |
+|     104 | Aman     | Agra      |        2 |    8 |
+|     105 | Mohit    | Kota      |        1 |    9 |
+|     106 | Jayansh  | Aligarh   |        1 |    9 |
+|     107 | Shashwat | Ghaziabad |        2 |    9 |
+|     108 | Dipesh   | Jaipur    |        2 | NULL |
+|     502 | Arun     | Guwahati  |        2 | NULL |
++---------+----------+-----------+----------+------+
+9 rows in set (0.00 sec)
+
+mysql> alter table Students modify cgpa float;
+Query OK, 9 rows affected (0.95 sec)
+Records: 9  Duplicates: 0  Warnings: 0
+
+mysql> select * from Students;
++---------+----------+-----------+----------+------+
+| roll_no | name     | address   | semester | cgpa |
++---------+----------+-----------+----------+------+
+|     101 | Apurv    | Roorkee   |        1 |    9 |
+|     102 | Ashish   | Dehradun  |        1 |   10 |
+|     103 | Vibhor   | Delhi     |        2 |    9 |
+|     104 | Aman     | Agra      |        2 |    8 |
+|     105 | Mohit    | Kota      |        1 |    9 |
+|     106 | Jayansh  | Aligarh   |        1 |    9 |
+|     107 | Shashwat | Ghaziabad |        2 |    9 |
+|     108 | Dipesh   | Jaipur    |        2 | NULL |
+|     502 | Arun     | Guwahati  |        2 | NULL |
++---------+----------+-----------+----------+------+
+9 rows in set (0.00 sec)
+
+mysql> update Students set cgpa=9 where roll_no=101;
+Query OK, 0 rows affected (0.05 sec)
+Rows matched: 1  Changed: 0  Warnings: 0
+
+mysql> update Students set cgpa=9.6 where roll_no=102;
+Query OK, 1 row affected (0.06 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update Students set cgpa=9.0 where roll_no=103;
+Query OK, 0 rows affected (0.05 sec)
+Rows matched: 1  Changed: 0  Warnings: 0
+
+mysql> update Students set cgpa=7.9 where roll_no=104;
+Query OK, 1 row affected (0.06 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update Students set cgpa=8.5 where roll_no=105;
+Query OK, 1 row affected (0.04 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update Students set cgpa=8.8 where roll_no=106;
+Query OK, 1 row affected (0.03 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update Students set cgpa=9.2 where roll_no=107;
+Query OK, 1 row affected (0.05 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update Students set cgpa=8.8 where roll_no=108;
+Query OK, 1 row affected (0.06 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update Students set cgpa=8.9 where roll_no=502;
+Query OK, 1 row affected (0.38 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from Students where cgpa >= 8.5;
++---------+----------+-----------+----------+------+
+| roll_no | name     | address   | semester | cgpa |
++---------+----------+-----------+----------+------+
+|     101 | Apurv    | Roorkee   |        1 |    9 |
+|     102 | Ashish   | Dehradun  |        1 |  9.6 |
+|     103 | Vibhor   | Delhi     |        2 |    9 |
+|     105 | Mohit    | Kota      |        1 |  8.5 |
+|     106 | Jayansh  | Aligarh   |        1 |  8.8 |
+|     107 | Shashwat | Ghaziabad |        2 |  9.2 |
+|     108 | Dipesh   | Jaipur    |        2 |  8.8 |
+|     502 | Arun     | Guwahati  |        2 |  8.9 |
++---------+----------+-----------+----------+------+
+8 rows in set (0.00 sec)
+
+mysql> update Students set address="Assam" where roll_no=502;
+Query OK, 1 row affected (0.04 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from Students;
++---------+----------+-----------+----------+------+
+| roll_no | name     | address   | semester | cgpa |
++---------+----------+-----------+----------+------+
+|     101 | Apurv    | Roorkee   |        1 |    9 |
+|     102 | Ashish   | Dehradun  |        1 |  9.6 |
+|     103 | Vibhor   | Delhi     |        2 |    9 |
+|     104 | Aman     | Agra      |        2 |  7.9 |
+|     105 | Mohit    | Kota      |        1 |  8.5 |
+|     106 | Jayansh  | Aligarh   |        1 |  8.8 |
+|     107 | Shashwat | Ghaziabad |        2 |  9.2 |
+|     108 | Dipesh   | Jaipur    |        2 |  8.8 |
+|     502 | Arun     | Assam     |        2 |  8.9 |
++---------+----------+-----------+----------+------+
+9 rows in set (0.00 sec)
+
+mysql> insert into Academic_programmes ('B.Tech',4,401),('M.Tech',2,201),('P.hd',1,301),('MBA',2,202);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ''B.Tech',4,401),('M.Tech',2,201),('P.hd',1,301),('MBA',2,202)' at line 1
+mysql> insert into Academic_programmes values ('B.Tech',4,401),('M.Tech',2,201),('P.hd',1,301),('MBA',2,202);
+ERROR 1136 (21S01): Column count doesn't match value count at row 1
+mysql> insert into Academic_programmes ('B.Tech',4,401,'ICSP','DSA','DBMS'),('M.Tech',2,201,'EEE','AI','ML'),('P.hd',1,301,'ERE','TES','RET'),('MBA',2,202,'MG','ECO','MATH');
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ''B.Tech',4,401,'ICSP','DSA','DBMS'),('M.Tech',2,201,'EEE','AI','ML'),('P.hd',1,3' at line 1
+mysql> insert into Academic_programmes ('B.Tech',4,401,'ICSP','DSA','DBMS'),('M.Tech',2,201,'EEE','AI','ML'),('P.hd',1,301,'ERE','TES','RET'),('MBA',2,202,'MG','ECO','MATH');
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ''B.Tech',4,401,'ICSP','DSA','DBMS'),('M.Tech',2,201,'EEE','AI','ML'),('P.hd',1,3' at line 1
+mysql> insert into Academic_programmes values ('B.Tech',4,401,'ICSP','DSA','DBMS'),('M.Tech',2,201,'EEE','AI','ML'),('P.hd',1,301,'ERE','TES','RET'),('MBA',2,202,'MG','ECO','MATH');
+Query OK, 4 rows affected (1.51 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+mysql> select name from Students asc;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'asc' at line 1
+mysql> select name from Students order by asc;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'asc' at line 1
+mysql> select name from Students order by name asc;
++----------+
+| name     |
++----------+
+| Aman     |
+| Apurv    |
+| Arun     |
+| Ashish   |
+| Dipesh   |
+| Jayansh  |
+| Mohit    |
+| Shashwat |
+| Vibhor   |
++----------+
+9 rows in set (0.00 sec)
+
+mysql> create table Registered (roll_no, num_sub);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ' num_sub)' at line 1
+mysql> create table Registered (roll_no int primary key, num_sub int);
+Query OK, 0 rows affected (0.78 sec)
+
+mysql> insert into Registered values (101, 2),(102,3),(502,2),(103,1),(104,2),(105,1),(106,2),(107,3),(108,2);
+Query OK, 9 rows affected (0.58 sec)
+Records: 9  Duplicates: 0  Warnings: 0
+
+mysql> select num_sub from Registered where Students.roll_no=Registered.roll_no group by Students.semester;
+ERROR 1054 (42S22): Unknown column 'Students.roll_no' in 'where clause'
+mysql> select num_sub from Registered where Students.roll_no=Registered.roll_no group by Students.semester;
+ERROR 1054 (42S22): Unknown column 'Students.roll_no' in 'where clause'
+mysql> select num_sub from Registered,Students where Students.roll_no=Registered.roll_no group by Students.semester;
++---------+
+| num_sub |
++---------+
+|       2 |
+|       1 |
++---------+
+2 rows in set (0.42 sec)
+
+mysql> select num_sub,semester from Registered,Students where Students.roll_no=Registered.roll_no group by Students.semester;
++---------+----------+
+| num_sub | semester |
++---------+----------+
+|       2 |        1 |
+|       1 |        2 |
++---------+----------+
+2 rows in set (0.56 sec)
+
+mysql>

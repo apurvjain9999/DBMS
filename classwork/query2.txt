@@ -1,0 +1,44 @@
+Enter password: **********
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 1
+Server version: 5.6.41-log MySQL Community Server (GPL)
+
+Copyright (c) 2000, 2018, Oracle and/or its affiliates. All rights reserved.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> create database University;
+Query OK, 1 row affected (0.00 sec)
+
+mysql> use University;
+Database changed
+mysql> create table Student (Roll_no int primary key, Name char(128), Address char(128), Semester char(128));
+Query OK, 0 rows affected (0.48 sec)
+mysql> create table Academic_programme (Name char(128) unique, Duration int, Code int primary key);
+Query OK, 0 rows affected (0.34 sec)
+
+mysql> create table Department (Code int primary key, Name char(128) unique);
+Query OK, 0 rows affected (0.37 sec)
+
+mysql> create table Teacher (Emp_code int primary key, Name char(128), Designation char (128), Department char (128), foreign key(Department) references Department (Name));
+Query OK, 0 rows affected (0.46 sec)
+
+mysql> alter table Student add column (CGPA float);
+Query OK, 0 rows affected (0.55 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> alter table Student add column (Registered_courses int);
+Query OK, 0 rows affected (0.58 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> select * from Student;
+Empty set (0.00 sec)
+mysql> alter table Student add column (Course1 char(128), Course2 char(128), Course3 char(128));
+Query OK, 0 rows affected (1.55 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql>
